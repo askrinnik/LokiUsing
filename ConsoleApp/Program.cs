@@ -1,12 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LokiLoggingProvider.Options;
+using Microsoft.Extensions.Logging;
 
 using var loggerFactory = LoggerFactory.Create(builder => builder
-    //.AddLoki(configure =>
-    //{
-    //    configure.Client = PushClient.Grpc;
-    //    configure.Grpc.Address = "http://localhost:9096";
-    //    configure.StaticLabels.JobName = "LokiUsing4";
-    //})
+    .AddLoki(configure =>
+    {
+        configure.Client = PushClient.Grpc;
+        // configure.Grpc.Address = "http://localhost:9095";
+        configure.StaticLabels.JobName = "LokiConsole";
+        configure.StaticLabels.AdditionalStaticLabels.Add("SystemName", "LokiUsing");
+    })
     .AddConsole());
 
 var logger = loggerFactory.CreateLogger<Program>();
