@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication1.Controllers;
 
@@ -21,13 +22,9 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        for (var i = 1; i < 10; i++)
-            if (i % 4 == 0)
-                _logger.LogError(i.ToString());
-            else if (i % 3 == 0)
-                _logger.LogWarning(i.ToString());
-            else
-                _logger.LogInformation(i.ToString());
+        _logger.LogInformation("Test message");
+        _logger.LogWarning("Test warning");
+        _logger.LogError("Test error");
 
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

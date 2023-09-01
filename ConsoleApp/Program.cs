@@ -5,7 +5,6 @@ using var loggerFactory = LoggerFactory.Create(builder => builder
     .AddLoki(configure =>
     {
         configure.Client = PushClient.Grpc;
-        // configure.Grpc.Address = "http://localhost:9095";
         configure.StaticLabels.JobName = "LokiConsole";
         configure.StaticLabels.AdditionalStaticLabels.Add("SystemName", "LokiUsing");
     })
@@ -13,13 +12,20 @@ using var loggerFactory = LoggerFactory.Create(builder => builder
 
 var logger = loggerFactory.CreateLogger<Program>();
 
-logger.LogInformation("Hello from my Console App!");
-for (var i = 1; i < 10; i++)
-    if(i%4 == 0)
-      logger.LogError(i.ToString());
-    else if (i%3 == 0)
-        logger.LogWarning(i.ToString());
-    else
-        logger.LogInformation(i.ToString());
+logger.LogInformation("Test message");
+logger.LogWarning("Test warning");
+logger.LogError("Test error");
+
+//GetWeatherForecast(logger);
 
 Console.ReadLine();
+return;
+
+static void GetWeatherForecast(ILogger logger1)
+{
+    using var client = new HttpClient();
+    var response = client.GetAsync(new Uri("http://localhost:5228/WeatherForecast")).Result
+        .Content.ReadAsStringAsync().Result;
+
+    logger1.LogInformation("HTTP response {Response}", response);
+}
