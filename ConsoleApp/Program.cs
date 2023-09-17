@@ -24,8 +24,7 @@ return;
 static void GetWeatherForecast(ILogger logger1)
 {
     using var client = new HttpClient();
-    var response = client.GetAsync(new Uri("http://localhost:5228/WeatherForecast")).Result
-        .Content.ReadAsStringAsync().Result;
+    var response = client.GetStringAsync(new Uri("http://localhost:5228/WeatherForecast")).Result;
 
     logger1.LogInformation("HTTP response {Response}", response);
 }
