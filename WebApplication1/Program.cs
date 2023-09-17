@@ -9,9 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Logging.AddConsole();
 builder.Logging.AddLoki(configure =>
 {
     configure.Client = PushClient.Grpc;
+    configure.Formatter = Formatter.Json;
     configure.StaticLabels.JobName = "LokiWebApplication";
     configure.StaticLabels.AdditionalStaticLabels.Add("SystemName", "LokiUsing");
 });
