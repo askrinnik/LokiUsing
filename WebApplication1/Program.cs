@@ -18,7 +18,6 @@ builder.Logging.AddLoki(configure =>
     configure.StaticLabels.AdditionalStaticLabels.Add("SystemName", "LokiUsing");
 });
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

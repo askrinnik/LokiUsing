@@ -11,9 +11,9 @@ services:
         command: -config.file=/etc/loki/local-config.yaml
         volumes:
             - loki:/loki
-        ports:
-            - "3100:3100" # http and Grafana data source
-            - "9095:9095" # grpc
+        # ports:
+            # - "3100:3100" # http and Grafana data source
+            # - "9095:9095" # grpc
     grafana:
         image: grafana/grafana-oss:latest-ubuntu
         hostname: grafana
