@@ -9,6 +9,21 @@ exporters:
     endpoint: http://loki:3100/loki/api/v1/push
 
 processors:
+  # move RequestPath attribute to a label
+  # attributes:
+    # actions:
+      # - action: insert
+        # key: loki.attribute.labels
+        # value: RequestPath
+        
+  # move SystemName resource to a label
+  resource:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: SystemName
+        
+  # rename service.name resurse to service_name and move to a label. We can't move resources with dots in a name.
   # resource:
     # attributes:
       # - action: insert
@@ -17,12 +32,6 @@ processors:
       # - action: insert
         # key: loki.resource.labels
         # value: service_name
-
-  resource:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: SystemName
 
 service:
   pipelines:

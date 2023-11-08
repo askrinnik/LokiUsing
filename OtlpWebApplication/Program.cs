@@ -1,5 +1,6 @@
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
+using OtlpWebApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +22,10 @@ builder.Logging.AddOpenTelemetry(options =>
     options.IncludeFormattedMessage = true;
     options.IncludeScopes = true;
     options.AddOtlpExporter(); // localhost:4317
+    options.AddProcessor(new ExceptionLogProcessor());
 });
 
-// Alternative way to add OpenTelemetry exporter
+//Alternative way to add OpenTelemetry exporter
 //builder.Services.AddLogging(loggingBuilder =>
 //    loggingBuilder.AddOpenTelemetry(options =>
 //    {
